@@ -1,11 +1,7 @@
 class IdlescapeDatabase {
     DEFAULT_URL_BASE = "https://raw.githubusercontent.com/HighOnMikey/idlescape-extraction/main/data";
 
-    constructor() {
-
-    }
-
-    static create() {
+    static createDefault() {
         if (typeof window.IdlescapeData === "undefined") {
             window.IdlescapeData = new IdlescapeDatabase();
             window.IdlescapeData.loadDefault();
