@@ -9,14 +9,9 @@ class IdlescapeDatabase {
     }
 
     loadDefault() {
-        this.loadJSON(`${this.DEFAULT_URL_BASE}/enchantments.json`)
-            .then((data) => this.enchantments = new EnchantmentMap(data))
-
-        this.loadJSON(`${this.DEFAULT_URL_BASE}/items.json`)
-            .then((data) => this.items = new ItemMap(data))
-
-        this.loadJSON(`${this.DEFAULT_URL_BASE}/locations.json`)
-            .then((data) => this.locations = new LocationMap(data))
+        this.loadJSON(`${this.DEFAULT_URL_BASE}/enchantments.json`).then((data) => (this.enchantments = new EnchantmentMap(data)));
+        this.loadJSON(`${this.DEFAULT_URL_BASE}/items.json`).then((data) => (this.items = new ItemMap(data)));
+        this.loadJSON(`${this.DEFAULT_URL_BASE}/locations.json`).then((data) => (this.locations = new LocationMap(data)));
     }
 
     async loadJSON(url) {
@@ -36,8 +31,7 @@ class IdlescapeItem {
     }
 
     getAugmentCost() {
-        if (!this.hasOwnProperty("augmentationCost"))
-            return undefined;
+        if (!this.hasOwnProperty("augmentationCost")) return undefined;
 
         let cost = {};
         for (const resourceId in this.augmentationCost) {
@@ -45,19 +39,18 @@ class IdlescapeItem {
             cost[resourceId] = {
                 id: resourceId,
                 cost: this.augmentationCost[resourceId],
-                name: resource ? resource.name : undefined
-            }
+                name: resource ? resource.name : undefined,
+            };
         }
 
         return cost;
     }
 
     getAugmentStats() {
-        if (!this.hasOwnProperty("augmentationStats"))
-            return undefined;
+        if (!this.hasOwnProperty("augmentationStats")) return undefined;
 
         let isScroll = this.hasOwnProperty("isChampScroll") ? this.isChampScroll : false;
-        let stats = { isScroll: isScroll, stats: {}};
+        let stats = { isScroll: isScroll, stats: {} };
 
         for (const i in this.augmentationStats) {
             if (!this.augmentationStats.hasOwnProperty(i)) continue;
@@ -111,9 +104,7 @@ class IdlescapeItemMap extends Map {
     }
 
     get(id) {
-        if (typeof id !== "number")
-            id = parseInt(id, 10);
-
+        if (typeof id !== "number") id = parseInt(id, 10);
         return super.get(id);
     }
 
@@ -140,12 +131,8 @@ class IdlescapeItemMap extends Map {
     }
 }
 
-class EnchantmentMap extends IdlescapeItemMap {
+class EnchantmentMap extends IdlescapeItemMap {}
 
-}
+class ItemMap extends IdlescapeItemMap {}
 
-class ItemMap extends IdlescapeItemMap {
-}
-
-class LocationMap extends IdlescapeItemMap {
-}
+class LocationMap extends IdlescapeItemMap {}
