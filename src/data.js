@@ -5,8 +5,6 @@ class IdlescapeDatabase {
         if (typeof window.IdlescapeData === "undefined") {
             window.IdlescapeData = new IdlescapeDatabase();
             window.IdlescapeData.loadDefault();
-        } else if (!(window.IdlescapeData instanceof IdlescapeDatabase)) {
-            console.error("window.IdlescapeData exists but is wrong type");
         }
     }
 
