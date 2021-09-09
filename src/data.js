@@ -90,16 +90,14 @@ class IdlescapeItem {
     }
 }
 
-class IdlescapeItemMap extends Map {
+class ISDataMap extends Map {
     constructor(data) {
         super();
         if (typeof data !== "object") {
             return;
         }
         for (let k in data) {
-            let item = new IdlescapeItem(data[k]);
-
-            this.set(parseInt(k, 10), new IdlescapeItem(data[k]));
+            this.set(parseInt(k, 10), data[k]);
         }
     }
 
@@ -131,8 +129,24 @@ class IdlescapeItemMap extends Map {
     }
 }
 
-class EnchantmentMap extends IdlescapeItemMap {}
+class EnchantmentMap extends ISDataMap {
+    static DESTRUCTIVE_IDS = [3, 7];
+    constructor(data) {
+        super(data);
+        this.forEach((v, k, m) => {
+            if (EnchantmentMap.DESTRUCTIVE_IDS.includes(v.id)) v.destructive = true;
+            m.set(k, v);
+        });
+    }
+}
 
-class ItemMap extends IdlescapeItemMap {}
+class ItemMap extends ISDataMap {
+    constructor(data) {
+        super(data);
+        this.forEach((v, k, m) => {
+            m.set(k, new IdlescapeItem(v));
+        });
+    }
+}
 
-class LocationMap extends IdlescapeItemMap {}
+class LocationMap extends ISDataMap {}
